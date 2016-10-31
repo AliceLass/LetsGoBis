@@ -3,6 +3,7 @@
 ''' Fichier python qui permet à l'utilisateur d'indiquer le nombre de passagers, son départ et son arrivée '''
 
 from geopy.geocoders import Nominatim
+import Point
 geolocator=Nominatim()
 
 def nombreDePassagers():
@@ -38,7 +39,9 @@ def addressOrigin():
         if geolocator.geocode(origin)==None:
             raise ValueError("l'adresse de départ est non valide")
         else:
-            return origin
+            point=Point.Point()
+            point.FromAddress(origin)
+            return point
     except ValueError:
         print("Votre adresse de départ n'est pas valide, veuillez l'indiquer de nouveau")
         addressOrigin()
@@ -52,7 +55,9 @@ def addressArrival():
         if geolocator.geocode(arrival) == None:
             raise ValueError("l'adresse d'arrivée n'est pas valide")
         else:
-            return arrival
+            point = Point.Point()
+            point.FromAddress(arrival)
+            return point
     except ValueError:
         print("Votre adresse d'arrivée n'est pas valide, veuillez l'indiquer de nouveau")
         addressArrival()

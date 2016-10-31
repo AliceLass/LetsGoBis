@@ -156,5 +156,9 @@ class MetaItinerary:
     def tauxdiff_durationWT(self):
         return self.diff_durationWT() / self.transit_duration
 
+    def tauxdiff_durationTA(self):
+        return (-1*self.diff_durationAT()) / self.autolib_duration
 
+    def tauxdiff_durationAT(self):
+        return self.diff_durationAT() / self.transit_duration
 

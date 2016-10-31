@@ -6,6 +6,7 @@ import requests
 
 #Créer l'URL avec les coordonnées GPS long,lat et une distance d
 def _url(point):
+    d = 500
     chaine='http://opendata.paris.fr/api/records/1.0/search/?dataset=stations-velib-disponibilites-en-temps-reel&facet=banking&facet=bonus&facet=status&facet=contract_name&geofilter.distance='+str(point.latitude)+'%2C+'+str(point.longitude)+'%2C'+str(d)
 
     return chaine

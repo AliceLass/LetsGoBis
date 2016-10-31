@@ -74,7 +74,7 @@ class ItineraryWalk:
 
     def DispatchDuration(self):
         # envoie le dispatch des temps de transit sous forme d'une liste.
-        Walking1 = self.WalkToStation.duration
+        Walking1 = self.WalkToArrival.duration
         Walking1 = Walking1 // 60
         return [Walking1]
 
@@ -93,7 +93,7 @@ class ItineraryTransit:
             elif i["travel_mode"] == "TRANSIT":
                 self.transit_duration += int(i["duration"]["value"])
                 self.nb_liaisons += 1
-        self.duration = self.Transit.duration
+        self.duration = self.transit_duration+self.walking_duration
 
     def DispatchDuration(self):
         # envoie le dispatch des temps de transit sous forme d'une liste.
