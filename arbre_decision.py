@@ -1,7 +1,7 @@
 # -*-coding:Utf-8 -*
 
-import arbrededecisionmoins4
-import arbrededecisionplus4
+import arbre_decision_moins4
+import arbre_decision_plus4
 import parametres
 
 
@@ -17,9 +17,9 @@ def arbre():
     nombreDePassagers=parametres.nombreDePassagers()
 
     if nombreDePassagers <=4 and nombreDePassagers >0:
-        arbrededecisionmoins4.arbremoins4(origin, arrival, chargement)
+        arbre_decision_moins4.arbremoins4(origin, arrival, chargement)
     elif nombreDePassagers >4:
-        arbrededecisionplus4.arbreplus4(origin, arrival, chargement)
+        arbre_decision_plus4.arbreplus4(origin, arrival, chargement)
 
 
 arbre()

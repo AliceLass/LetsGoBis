@@ -4,10 +4,10 @@
 Il est appelé par l'arbre de décision en fonction du mode de déplacement choisi"""
 
 
-import MetaItinerary
-import Itinerary
-import ItineraryDispatch
-import Point
+import meta_itinerary
+import itinerary
+import itinerary_dispatch
+import point
 
 #Réponse si le mode de déplacement choisi est walking
 def reponse_walking(meta):

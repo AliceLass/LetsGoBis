@@ -1,21 +1,21 @@
 # -*-coding:Utf-8 -*
 
-import MetaItinerary
-import Meteo
-import Reponse
+import meta_itinerary
+import meteo
+import reponse
 
 def arbreplus4(origin, arrival, chargement):
     ''' Fonction d'arbre de decision si il y a plus de 4 passagers '''
 
     # Infos sur les passagers
-    meta = MetaItinerary.MetaItinerary(origin, arrival)
+    meta = meta_itinerary.MetaItinerary(origin, arrival)
 
     # Infos depuis API
-    meteo = Meteo.meteo()[1]
-    temperature = Meteo.meteo()[0]
-    reponse_transit = Reponse.reponse_transit(meta)
-    reponse_walking = Reponse.reponse_walking(meta)
-    reponse_velib = Reponse.reponse_velib(meta)
+    meteo = meteo.meteo()[1]
+    temperature = meteo.meteo()[0]
+    reponse_transit = reponse.reponse_transit(meta)
+    reponse_walking = reponse.reponse_walking(meta)
+    reponse_velib = reponse.reponse_velib(meta)
 
     if chargement=="beaucoup":
         print("Vous êtes chargés mais trop nombreux pour rentrer dans une autolib... Louez un petit van!")

@@ -1,6 +1,6 @@
 # -*-coding:Utf-8 -*
 
-import ItineraryDispatch
+import itinerary_dispatch
 
 
 class MetaItinerary:
@@ -8,10 +8,10 @@ class MetaItinerary:
     def __init__(self, origin, arrival):
         self.origin = origin
         self.arrival = arrival
-        self.walkingitinerary = ItineraryDispatch.ItineraryWalk(self.origin, self.arrival)
-        self.velibitinerary = ItineraryDispatch.ItineraryVelib(self.origin, self.arrival)
-        self.autolibitinerary = ItineraryDispatch.ItineraryAutolib(self.origin, self.arrival)
-        self.transititinerary = ItineraryDispatch.ItineraryTransit(self.origin, self.arrival)
+        self.walkingitinerary = itinerary_dispatch.ItineraryWalk(self.origin, self.arrival)
+        self.velibitinerary = itinerary_dispatch.ItineraryVelib(self.origin, self.arrival)
+        self.autolibitinerary = itinerary_dispatch.ItineraryAutolib(self.origin, self.arrival)
+        self.transititinerary = itinerary_dispatch.ItineraryTransit(self.origin, self.arrival)
         self.walking_duration = self.walkingitinerary.duration
         self.walking_walkingduration = self.walkingitinerary.walking_duration
         self.velib_duration=self.velibitinerary.duration

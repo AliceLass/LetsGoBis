@@ -1,22 +1,22 @@
 # -*-coding:Utf-8 -*
 
-import MetaItinerary
-import Meteo
-import Reponse
+import meta_itinerary
+import meteo
+import reponse
 
 def arbremoins4(origin, arrival, chargement):
     ''' Fonction d'arbre de decision si il y a moins de 4 passagers '''
 
     # Infos sur les passagers
-    meta = MetaItinerary.MetaItinerary(origin, arrival)
+    meta = meta_itinerary.MetaItinerary(origin, arrival)
 
     # Infos depuis API
-    meteo = Meteo.meteo()[1]
-    temperature = Meteo.meteo()[0]
-    reponse_transit = Reponse.reponse_transit(meta)
-    reponse_walking = Reponse.reponse_walking(meta)
-    reponse_velib = Reponse.reponse_velib(meta)
-    reponse_autolib = Reponse.reponse_autolib(meta)
+    meteo = meteo.meteo()[1]
+    temperature = meteo.meteo()[0]
+    reponse_transit = reponse.reponse_transit(meta)
+    reponse_walking = reponse.reponse_walking(meta)
+    reponse_velib = reponse.reponse_velib(meta)
+    reponse_autolib = reponse.reponse_autolib(meta)
 
     if chargement== "beaucoup":
         print(reponse_autolib)

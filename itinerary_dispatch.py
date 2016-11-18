@@ -1,9 +1,9 @@
 # -*-coding:Utf-8 -*
 
-import Itinerary
+import itinerary
 import velib
 import autolib
-import Point
+import point
 
 #L'objectif est de creer des class séparées pour chaque type d'itineraire.
 
@@ -13,14 +13,14 @@ class ItineraryAutolib:
         # On definit les points intermediaires
         self.Origin=Origin
         self.Arrival=Arrival
-        self.StationOrigin = Point.Point()
+        self.StationOrigin = point.Point()
         self.StationOrigin.FromCoord(autolib.autolib(Origin)[0])
-        self.StationArrival = Point.Point()
+        self.StationArrival = point.Point()
         self.StationArrival.FromCoord(autolib.autolib(Arrival)[0])
         # On crée les 3 itineraires
-        self.WalkToStation = Itinerary.Itinerary(Origin, self.StationOrigin, 'walking')
-        self.Driving = Itinerary.Itinerary(self.StationOrigin, self.StationArrival, 'driving')
-        self.WalkToArrival = Itinerary.Itinerary(self.StationArrival, Arrival, 'walking')
+        self.WalkToStation = itinerary.Itinerary(Origin, self.StationOrigin, 'walking')
+        self.Driving = itinerary.Itinerary(self.StationOrigin, self.StationArrival, 'driving')
+        self.WalkToArrival = itinerary.Itinerary(self.StationArrival, Arrival, 'walking')
         self.walking_duration = self.WalkToStation.duration + self.WalkToArrival.duration
         self.duration = self.WalkToStation.duration + self.Driving.duration + self.WalkToArrival.duration
 
@@ -41,14 +41,14 @@ class ItineraryVelib:
         # On definit les points intermediaires
         self.Origin = Origin
         self.Arrival = Arrival
-        self.StationOrigin = Point.Point()
+        self.StationOrigin = point.Point()
         self.StationOrigin.FromCoord(velib.velib(Origin)[0])
-        self.StationArrival = Point.Point()
+        self.StationArrival = point.Point()
         self.StationArrival.FromCoord(velib.velib(Arrival)[0])
         # On crée les 3 itineraires
-        self.WalkToStation = Itinerary.Itinerary(Origin, self.StationOrigin, 'walking')
-        self.Biking = Itinerary.Itinerary(self.StationOrigin, self.StationArrival, 'bicycling')
-        self.WalkToArrival = Itinerary.Itinerary(self.StationArrival, Arrival, 'walking')
+        self.WalkToStation = itinerary.Itinerary(Origin, self.StationOrigin, 'walking')
+        self.Biking = itinerary.Itinerary(self.StationOrigin, self.StationArrival, 'bicycling')
+        self.WalkToArrival = itinerary.Itinerary(self.StationArrival, Arrival, 'walking')
         self.walking_duration = self.WalkToStation.duration + self.WalkToArrival.duration
         self.duration = self.WalkToStation.duration + self.Biking.duration + self.WalkToArrival.duration
 
@@ -68,7 +68,7 @@ class ItineraryWalk:
     def __init__(self, Origin, Arrival):
         self.Origin = Origin
         self.Arrival = Arrival
-        self.WalkToArrival = Itinerary.Itinerary(Origin, Arrival, 'walking')
+        self.WalkToArrival = itinerary.Itinerary(Origin, Arrival, 'walking')
         self.walking_duration = self.WalkToArrival.duration
         self.duration = self.WalkToArrival.duration
 
@@ -83,7 +83,7 @@ class ItineraryTransit:
     def __init__(self, Origin, Arrival):
         self.Origin = Origin
         self.Arrival = Arrival
-        self.steps = Itinerary.Itinerary(Origin, Arrival, 'transit').itinerary["routes"][0]["legs"][0]["steps"]
+        self.steps = itinerary.Itinerary(Origin, Arrival, 'transit').itinerary["routes"][0]["legs"][0]["steps"]
         self.walking_duration = 0
         self.transit_duration = 0
         self.nb_liaisons = -1

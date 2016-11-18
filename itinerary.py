@@ -1,7 +1,7 @@
 # -*-coding:Utf-8 -*
 
 import requests
-import Point
+import point
 
 API_gglekey="AIzaSyBsakgF5UCvejwmCE0t5y0pFCdk7AACIy8"
 
