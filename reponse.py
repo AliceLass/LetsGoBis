@@ -1,16 +1,10 @@
 # -*-coding:Utf-8 -*
 
-"""Module envoyant la réponse finale de Comment y aller ?
-Il est appelé par l'arbre de décision en fonction du mode de déplacement choisi"""
+"""Module envoyant la réponse finale de Comment y aller? Il est appelé par l'arbre de décision en fonction du mode de déplacement choisi"""
 
 
-import meta_itinerary
-import itinerary
-import itinerary_dispatch
-import point
-
-#Réponse si le mode de déplacement choisi est walking
 def reponse_walking(meta):
+    '''Fonction appelée si le mode de deplacement choisi est walking'''
     origin=meta.origin
     arrival=meta.arrival
     duration_minute=meta.walking_duration//60
@@ -18,8 +12,9 @@ def reponse_walking(meta):
     reponse=str("Marche depuis "+ origin.address + " jusqu'à " + arrival.address + "." + "\n" + "La durée du parcours est de " + str(duration_minute) + " minutes " + str(duration_seconde) + " secondes. ")
     return(reponse)
 
-#Réponse si le mode de déplacement choisi est le vélib
+
 def reponse_velib(meta):
+    '''Fonction appelée si le mode de deplacement choisi est le velib'''
     origin=meta.origin
     arrival=meta.arrival
     station_origin=meta.velibitinerary.StationOrigin
@@ -29,8 +24,9 @@ def reponse_velib(meta):
     reponse = str("Marche depuis " + origin.address + " jusqu'à " + station_origin.address + "." + "\n" + "Prends le vélib à la station située " + station_origin.address + " et roule jusqu'à la station située " + station_arrival.address + "\n" + "Marche depuis " + station_arrival.address + " jusqu'à " + arrival.address + "." + "\n" + "La durée du parcours est de " + str(duration_minute) + " minutes " + str(duration_seconde) + " secondes. ")
     return(reponse)
 
-#Réponse si le mode de déplacement choisi est l'autolib
+
 def reponse_autolib(meta):
+    '''Fonction appelée si le mode de deplacement choisi est l'autolib'''
     origin=meta.origin
     arrival=meta.arrival
     station_origin=meta.autolibitinerary.StationOrigin
@@ -40,11 +36,12 @@ def reponse_autolib(meta):
     reponse = str("Marche depuis " + origin.address + " jusqu'à " + station_origin.address + "." + "\n" + "Prends l'autolib à la station située " + station_origin.address + " et roule jusqu'à la station située " + station_arrival.address + "\n" + "Marche depuis " + station_arrival.address + " jusqu'à " + arrival.address + "." + "\n" + "La durée du parcours est de " + str(duration_minute) + " minutes " + str(duration_seconde) + " secondes. ")
     return(reponse)
 
-#Réponse si le mode de déplacement choisi est le transit
+
 def reponse_transit(meta):
+    '''Fonction appelée si le mode de deplacement choisi est le transit'''
     origin=meta.origin
     arrival=meta.arrival
-    steps=meta.transititinerary.ItinerarySteps()
+    steps=meta.transititinerary.itinerary_steps()
     reponse = str("Marche depuis " + origin.address + " jusqu'à " + steps[0]["departure_stop"] + "." + "\n")
     for i in range(0,len(steps)):
         reponse += str("Prendre la ligne " + steps[i]["line"] + " de " + steps[i]["type"] + " en direction de " + steps[i]["direction"] + ". Descendre à " + steps[i]["arrival_stop"] + "." + "\n")

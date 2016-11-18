@@ -1,17 +1,19 @@
 # -*-coding:Utf-8 -*
 
+'''Module contenant l'arbre de decision dans le cas ou il y a moins de 4 passagers'''
+
 import meta_itinerary
 import meteo
 import reponse
 
-def arbremoins4(origin, arrival, chargement):
+def arbre_moins4(origin, arrival, chargement):
     ''' Fonction d'arbre de decision si il y a moins de 4 passagers '''
 
     # Infos sur les passagers
     meta = meta_itinerary.MetaItinerary(origin, arrival)
 
     # Infos depuis API
-    meteo = meteo.meteo()[1]
+    temps = meteo.meteo()[1]
     temperature = meteo.meteo()[0]
     reponse_transit = reponse.reponse_transit(meta)
     reponse_walking = reponse.reponse_walking(meta)
@@ -21,7 +23,7 @@ def arbremoins4(origin, arrival, chargement):
     if chargement== "beaucoup":
         print(reponse_autolib)
     else :
-        if meteo == "pluie":
+        if temps == "pluie":
             if meta.min_durationAT()[0]=="autolib":
                 if meta.diff_walkingdurationAT() > 600 and meta.tauxdiff_durationTA() < 0.15:
                     print(reponse_transit)
@@ -45,7 +47,7 @@ def arbremoins4(origin, arrival, chargement):
                     else:
                         print(reponse_transit)
             else:
-                if meteo == "soleil" and temperature > 15 :
+                if temps == "soleil" and temperature > 15 :
                     if chargement=="un peu":
                         if meta.min_durationATW()[0]=="walking":
                             print(reponse_walking)
@@ -63,7 +65,7 @@ def arbremoins4(origin, arrival, chargement):
                         if meta.min_durationATVW()[0]=="velib":
                             print(reponse_velib)
                         elif meta.min_durationATVW()[0]=="walking":
-                            print( reponse_walking)
+                            print(reponse_walking)
                         elif meta.min_durationATVW()[0]=="transit":
                             if meta.min_durationVW()[0]=="velib":
                                 if meta.tauxdiff_durationVT() < 0.15 and meta.diff_durationVT < 600:

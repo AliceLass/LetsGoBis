@@ -1,89 +1,96 @@
 # -*-coding:Utf-8 -*
 
+'''Module créant les classes d'itineraires associes a chacun des moyens de transport'''
+
 import itinerary
 import velib
 import autolib
 import point
 
-#L'objectif est de creer des class séparées pour chaque type d'itineraire.
-
 class ItineraryAutolib:
-    #Dispatch des itineraires des etapes pour l'autolib.
-    def __init__(self, Origin, Arrival):
-        # On definit les points intermediaires
-        self.Origin=Origin
-        self.Arrival=Arrival
-        self.StationOrigin = point.Point()
-        self.StationOrigin.FromCoord(autolib.autolib(Origin)[0])
-        self.StationArrival = point.Point()
-        self.StationArrival.FromCoord(autolib.autolib(Arrival)[0])
-        # On crée les 3 itineraires
-        self.WalkToStation = itinerary.Itinerary(Origin, self.StationOrigin, 'walking')
-        self.Driving = itinerary.Itinerary(self.StationOrigin, self.StationArrival, 'driving')
-        self.WalkToArrival = itinerary.Itinerary(self.StationArrival, Arrival, 'walking')
-        self.walking_duration = self.WalkToStation.duration + self.WalkToArrival.duration
-        self.duration = self.WalkToStation.duration + self.Driving.duration + self.WalkToArrival.duration
+    '''Classe qui permet le dispatch des itineraires des etapes pour l'autolib'''
 
-    def DispatchDuration(self):
-        # envoie le dispatch des temps de transit sous forme d'une liste.
-        Walking1 = self.WalkToStation.duration
-        Walking1 = Walking1 // 60
-        Walking2 = self.WalkToArrival.duration
-        Walking2 = Walking2 // 60
-        DriveDuration = self.Driving.duration
-        DriveDuration = DriveDuration // 60
-        return [Walking1, DriveDuration, Walking2]
+    def __init__(self, origin, arrival):
+        '''Constructeur de la classe ItineraryAutolib'''
+        self.origin=origin
+        self.arrival=arrival
+        self.station_origin = point.Point()
+        self.station_origin.from_coord(autolib.autolib(origin)[0])
+        self.station_arrival = point.Point()
+        self.station_arrival.from_coord(autolib.autolib(arrival)[0])
+        # On crée les 3 itineraires
+        self.walk_to_station = itinerary.Itinerary(origin, self.station_origin, 'walking')
+        self.driving = itinerary.Itinerary(self.station_origin, self.station_arrival, 'driving')
+        self.walk_to_arrival = itinerary.Itinerary(self.station_arrival, arrival, 'walking')
+        self.walking_duration = self.walk_to_station.duration + self.walk_to_arrival.duration
+        self.duration = self.walk_to_station.duration + self.driving.duration + self.walk_to_arrival.duration
+
+    def dispatch_duration(self):
+        '''Methode qui envoie le dispatch des temps de transit sous forme d'une liste'''
+        walking1 = self.walk_to_station.duration
+        walking1 = walking1 // 60
+        walking2 = self.walk_to_arrival.duration
+        walking2 = walking2 // 60
+        drive_duration = self.driving.duration
+        drive_duration = drive_duration // 60
+        return [walking1, drive_duration, walking2]
 
 
 class ItineraryVelib:
-    # Dispatch des itineraires des etapes pour le velib.
-    def __init__(self, Origin, Arrival):
-        # On definit les points intermediaires
-        self.Origin = Origin
-        self.Arrival = Arrival
-        self.StationOrigin = point.Point()
-        self.StationOrigin.FromCoord(velib.velib(Origin)[0])
-        self.StationArrival = point.Point()
-        self.StationArrival.FromCoord(velib.velib(Arrival)[0])
-        # On crée les 3 itineraires
-        self.WalkToStation = itinerary.Itinerary(Origin, self.StationOrigin, 'walking')
-        self.Biking = itinerary.Itinerary(self.StationOrigin, self.StationArrival, 'bicycling')
-        self.WalkToArrival = itinerary.Itinerary(self.StationArrival, Arrival, 'walking')
-        self.walking_duration = self.WalkToStation.duration + self.WalkToArrival.duration
-        self.duration = self.WalkToStation.duration + self.Biking.duration + self.WalkToArrival.duration
+    '''Classe qui permet le dispatch des itineraires des etapes pour le velib'''
 
-    def DispatchDuration(self):
-        # envoie le dispatch des temps de transit sous forme d'une liste.
-        Walking1 = self.WalkToStation.duration
-        Walking1 = Walking1 // 60
-        Walking2 = self.WalkToArrival.duration
-        Walking2 = Walking2 // 60
-        BikeDuration = self.Biking.duration
-        BikeDuration = BikeDuration // 60
-        return [Walking1, BikeDuration, Walking2]
+    def __init__(self, origin, arrival):
+        '''Constructeur de la classe'''
+        self.origin = origin
+        self.arrival = arrival
+        self.station_origin = point.Point()
+        self.station_origin.from_coord(velib.velib(origin)[0])
+        self.station_arrival = point.Point()
+        self.station_arrival.from_coord(velib.velib(arrival)[0])
+        # On crée les 3 itineraires
+        self.walk_to_station = itinerary.Itinerary(origin, self.station_origin, 'walking')
+        self.biking = itinerary.Itinerary(self.station_origin, self.station_arrival, 'bicycling')
+        self.walk_to_arrival = itinerary.Itinerary(self.station_arrival, arrival, 'walking')
+        self.walking_duration = self.walk_to_station.duration + self.walk_to_arrival.duration
+        self.duration = self.walk_to_station.duration + self.biking.duration + self.walk_to_arrival.duration
+
+    def dispatch_duration(self):
+        '''Methode qui envoie le dispatch des temps de transit sous forme d'une liste'''
+        walking1 = self.walk_to_station.duration
+        walking1 = walking1 // 60
+        walking2 = self.walk_to_arrival.duration
+        walking2 = walking2 // 60
+        bike_duration = self.biking.duration
+        bike_duration = bike_duration // 60
+        return [walking1, bike_duration, walking2]
 
 
 class ItineraryWalk:
-    # Itineraire simple pour la marche.
-    def __init__(self, Origin, Arrival):
-        self.Origin = Origin
-        self.Arrival = Arrival
-        self.WalkToArrival = itinerary.Itinerary(Origin, Arrival, 'walking')
-        self.walking_duration = self.WalkToArrival.duration
-        self.duration = self.WalkToArrival.duration
+    '''Classe qui permet le dispatch des itineraires des etapes pour la marche'''
 
-    def DispatchDuration(self):
-        # envoie le dispatch des temps de transit sous forme d'une liste.
-        Walking1 = self.WalkToArrival.duration
-        Walking1 = Walking1 // 60
-        return [Walking1]
+    def __init__(self, origin, arrival):
+        '''Constructeur de classe'''
+        self.origin = origin
+        self.arrival = arrival
+        self.walk_to_arrival = itinerary.Itinerary(origin, arrival, 'walking')
+        self.walking_duration = self.walk_to_arrival.duration
+        self.duration = self.walk_to_arrival.duration
+
+    def dispatch_duration(self):
+        '''Methode qui envoie le dispatch des temps de transit sous forme d'une liste'''
+        walking1 = self.walk_to_arrival.duration
+        walking1 = walking1 // 60
+        return [walking1]
 
 
 class ItineraryTransit:
-    def __init__(self, Origin, Arrival):
-        self.Origin = Origin
-        self.Arrival = Arrival
-        self.steps = itinerary.Itinerary(Origin, Arrival, 'transit').itinerary["routes"][0]["legs"][0]["steps"]
+    '''Classe qui permet le dispatch des itineraires des etapes pour les transports en commun'''
+
+    def __init__(self, origin, arrival):
+        '''Constructeur de la classe ItineraryTransit'''
+        self.origin = origin
+        self.arrival = arrival
+        self.steps = itinerary.Itinerary(origin, arrival, 'transit').itinerary["routes"][0]["legs"][0]["steps"]
         self.walking_duration = 0
         self.transit_duration = 0
         self.nb_liaisons = -1
@@ -95,12 +102,12 @@ class ItineraryTransit:
                 self.nb_liaisons += 1
         self.duration = self.transit_duration+self.walking_duration
 
-    def DispatchDuration(self):
-        # envoie le dispatch des temps de transit sous forme d'une liste.
+    def dispatch_duration(self):
+        '''Methode qui envoie le dispatch des temps de transit sous forme d'une liste'''
         return ([self.walking_duration // 60, self.transit_duration // 60])
 
-    def ItinerarySteps(self):
-        #Construire une liste de dictionnaire avec les informations de chaques etapes du transport
+    def itinerary_steps(self):
+        '''Methode qui retourne une liste de dictionnaires avec les informations de chaque etape du transport'''
         steps = []
         for i in self.steps:
             if i['travel_mode'] == "TRANSIT":

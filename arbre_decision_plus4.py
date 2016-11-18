@@ -1,17 +1,19 @@
 # -*-coding:Utf-8 -*
 
+'''Module contenant l'arbre de decision dans le cas ou il y a plus de 4 passagers (l'option autolib est mise de cote)'''
+
 import meta_itinerary
 import meteo
 import reponse
 
-def arbreplus4(origin, arrival, chargement):
+def arbre_plus4(origin, arrival, chargement):
     ''' Fonction d'arbre de decision si il y a plus de 4 passagers '''
 
     # Infos sur les passagers
     meta = meta_itinerary.MetaItinerary(origin, arrival)
 
     # Infos depuis API
-    meteo = meteo.meteo()[1]
+    temps = meteo.meteo()[1]
     temperature = meteo.meteo()[0]
     reponse_transit = reponse.reponse_transit(meta)
     reponse_walking = reponse.reponse_walking(meta)
@@ -20,10 +22,10 @@ def arbreplus4(origin, arrival, chargement):
     if chargement=="beaucoup":
         print("Vous êtes chargés mais trop nombreux pour rentrer dans une autolib... Louez un petit van!")
     else:
-        if meteo == "pluie" or temperature < 0:
+        if temps == "pluie" or temperature < 0:
             print(reponse_transit)
         else:
-            if meteo == "soleil" and temperature > 15:
+            if temps == "soleil" and temperature > 15:
                 if chargement == "un peu":
                     if meta.min_durationTW()[0] == "transit":
                         if meta.tauxdiff_durationWT()<0.15 and meta.diff_durationWT()<600:

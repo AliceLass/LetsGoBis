@@ -4,28 +4,28 @@
 
 import requests
 
-#Créer l'URL avec les coordonnées GPS long,lat et une distance d
 def _url(point):
-    d = 500
-    chaine='http://opendata.paris.fr/api/records/1.0/search/?dataset=stations-velib-disponibilites-en-temps-reel&facet=banking&facet=bonus&facet=status&facet=contract_name&geofilter.distance='+str(point.latitude)+'%2C+'+str(point.longitude)+'%2C'+str(d)
-
+    '''Fonction créant l'URL avec les coordonnées GPS long,lat et une distance D'''
+    D = 500
+    chaine='http://opendata.paris.fr/api/records/1.0/search/?dataset=stations-velib-disponibilites-en-temps-reel&facet=banking&facet=bonus&facet=status&facet=contract_name&geofilter.distance='+str(point.latitude)+'%2C+'+str(point.longitude)+'%2C'+str(D)
     return chaine
 
-#Retourne le JSON avec les stations autolib correspondant à URL
+
 def get_velib(point):
+    '''Fonction qui retourne le JSON avec les stations autolib correspondant à URL'''
     return requests.get(_url(point))
 
-#Va chercher la station la plus proche et ses coordonnées dans le JSON
+
 def velib(point):
+    '''Fonction qui va chercher la station la plus proche et ses coordonnées dans le JSON'''
     velib_json=get_velib(point).json()
-    dmin = 500
+    DMIN = 500
     station_min = []
     adress_station_min=""
 
     for i in velib_json['records']:
-        if int(i['fields']['dist']) < dmin:
-            dmin = int(i['fields']['dist'])
+        if int(i['fields']['dist']) < DMIN:
+            DMIN = int(i['fields']['dist'])
             station_min = i['fields']['position']
             adress_station_min = i['fields']['address']
-
     return (station_min,adress_station_min)
