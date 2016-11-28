@@ -16,7 +16,7 @@ def nombre_de_passagers():
             return question_nombre_passagers
     except ValueError:
         print("Vous n'avez pas indiqué un nombre positif")
-        nombre_de_passagers()
+        return nombre_de_passagers()
 
 
 def chargement():
@@ -29,10 +29,10 @@ def chargement():
             return question_chargement
     except ValueError:
         print("Vous n'avez pas indiqué une des trois propositions")
-        chargement()
+        return chargement()
 
 
- def address_origin():
+def address_origin():
      '''Fonction qui demande a l'utilisateur son point de depart'''
      try:
          question_origin_address=input("Adresse de départ?")
@@ -46,10 +46,10 @@ def chargement():
              return point_origin
      except ValueError:
          print("Votre adresse de départ n'est pas valide, veuillez l'indiquer de nouveau")
-         address_origin()
+         return address_origin()
 
 
- def address_arrival():
+def address_arrival():
      try:
          question_arrival_address=input("Adresse d'arrivée?")
          question_arrival_city=input("Ville d'arrivée?")
@@ -62,4 +62,4 @@ def chargement():
              return point_arrival
      except ValueError:
          print("Votre adresse d'arrivée n'est pas valide, veuillez l'indiquer de nouveau")
-         address_arrival()
+         return address_arrival()
